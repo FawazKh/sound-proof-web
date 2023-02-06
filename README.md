@@ -1,2 +1,2 @@
 # sound-proof-web-debug
-Sound Proof
+This repo is only being used to deploy to Heroku.
