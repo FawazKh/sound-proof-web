@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script>
+    const ROOM_ID = "<%= roomId %>"
+  </script>
+  <script src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script>
+  <script src="/socket.io/socket.io.js" defer></script>
+  <script src="script.js" defer></script>
+  <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+  <script defer type="text/javascript">
+    //We can update this to be where the server is hosted
+const socket = io("http://localhost:3000")
+const videoGrid = document.getElementById('video-grid')
+const myPeer = new Peer(undefined, {
+  host: '/',
+  port: '3001'
+})
+const myAudio = document.createElement('video')
+const peers = {}
+navigator.mediaDevices.getUserMedia({
+  video: true,
+  audio: true
+}).then(stream => {
+  addAudioStream(myAudio, stream)
+
+  myPeer.on('call', call => {
+    call.answer(stream)
+    const audio = document.createElement('video')
+    call.on('stream', userAudioStream => {
+      addAudioStream(audio, userAudioStream)
+    })
+  })
+
+  socket.on('user-connected', userId => {
+    connectToNewUser(userId, stream)
+  })
+})
+
+socket.on('user-disconnected', userId => {
+  if (peers[userId]) peers[userId].close()
+})
+
+myPeer.on('open', id => {
+  socket.emit('join-room', ROOM_ID, id)
+})
+
+function connectToNewUser(userId, stream) {
+  const call = myPeer.call(userId, stream)
+  const audio = document.createElement('video')
+  call.on('stream', userAudioStream => {
+    addAudioStream(audio, userAudioStream)
+  })
+  call.on('close', () => {
+    audio.remove()
+  })
+
+  peers[userId] = call
+}
+
+function addAudioStream(audio, stream) {
+  audio.srcObject = stream
+  audio.addEventListener('loadedmetadata', () => {
+    audio.play()
+  })
+  videoGrid.append(video)
+}
+  </script>
+  <title>Document</title>
+  <style>
+    #video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 300px);
+      grid-auto-rows: 300px;
+    }
+    
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <div id="video-grid"></div>
+</body>
+</html>

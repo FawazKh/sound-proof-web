@@ -267,3 +267,8 @@ def register():
 @login_required
 def twofa_register():
     return render_template('twofa_register.html', user=current_user)
+
+#Route that begins webrtc connection process
+@authentication.route("/webrtc/<username>", methods=['GET'])
+def webrtc(username):
+    return render_template('session.ejs', user=current_user)
