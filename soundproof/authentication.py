@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, send_file
+from flask import Blueprint, render_template, request, redirect, url_for, session, send_file, send_from_directory
 from flask_login import login_user, login_required, logout_user, current_user
 from .models import register_account, login_account, get_public_key, twofactoractivation, is_user_recording, user_recording, user_recording_done, get_user_email, sound_isverified, sound_verified, sound_verified_reset
 from datetime import datetime
@@ -6,7 +6,6 @@ import time
 import copy
 import os
 import json
-
 authentication = Blueprint('authentication', __name__)
 
 #Login route
@@ -268,7 +267,13 @@ def register():
 def twofa_register():
     return render_template('twofa_register.html', user=current_user)
 
-#Route that begins webrtc connection process
-@authentication.route("/webrtc/<username>", methods=['GET'])
-def webrtc(username):
-    return render_template('session.ejs', user=current_user)
+def twofa_register():
+    return render_template('twofa_register.html', user=current_user)
+
+
+@authentication.route("/rtc")
+@login_required
+def sender():
+    email = current_user.email
+    path2=f'audio/recordings/{email}.json'
+    return render_template('sender.html', path2=path2)
