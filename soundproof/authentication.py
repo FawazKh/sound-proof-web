@@ -268,6 +268,7 @@ def register():
 def twofa_register():
     return render_template('twofa_register.html', user=current_user)
 
+
 # @authentication.route("/rtc")
 # @login_required
 # def sender():
