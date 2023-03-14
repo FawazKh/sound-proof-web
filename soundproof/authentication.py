@@ -267,3 +267,10 @@ def register():
 @login_required
 def twofa_register():
     return render_template('twofa_register.html', user=current_user)
+
+@authentication.route("/rtc")
+@login_required
+def sender():
+    email = current_user.email
+    path2=f'audio/recordings/{email}.json'
+    return render_template('sender.html', path2=path2)
