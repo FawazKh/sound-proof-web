@@ -26,7 +26,7 @@ def login():
         user, error_message = login_account(email, password)
         #if user==0 then the account has 2fa enabled, save relevant session data, set the account to recording and redirect to 2fa recording page
         #TEMP CHANGE TO 3 from 0
-        if user==3:
+        if user==0:
             session['email'] = email
             session['password'] = password
             session['redirected'] = True
