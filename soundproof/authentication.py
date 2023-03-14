@@ -25,7 +25,6 @@ def login():
         #attempt login
         user, error_message = login_account(email, password)
         #if user==0 then the account has 2fa enabled, save relevant session data, set the account to recording and redirect to 2fa recording page
-        #TEMP CHANGE TO 3 from 0
         if user==0:
             session['email'] = email
             session['password'] = password
@@ -269,9 +268,9 @@ def register():
 def twofa_register():
     return render_template('twofa_register.html', user=current_user)
 
-@authentication.route("/rtc")
-@login_required
-def sender():
-    email = current_user.email
-    path2=f'audio/recordings/{email}.json'
-    return render_template('sender.html', path2=path2)
+# @authentication.route("/rtc")
+# @login_required
+# def sender():
+#     email = current_user.email
+#     path2=f'audio/recordings/{email}.json'
+#     return render_template('sender.html', path2=path2)
