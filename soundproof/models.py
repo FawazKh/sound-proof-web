@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
     #Stores the phones public key
     twofa_device_id= db.Column(db.String(512), default='')
 
-    #Bool for if 2FA is enabled
+    ##Bool for if 2FA is enabled
     twofa_enabled = db.Column(db.Boolean, default=False)
 
     #Bool for if the account is sound_verified
