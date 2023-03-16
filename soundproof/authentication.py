@@ -157,6 +157,9 @@ def login_2fa_data():
                     if(is_recent(path)):
                         #If recording is recent send the file to the phone
                         return send_file(path2), 200
+
+                        #call the sender function here, read the json data from path2
+
                     time.sleep(1)
                 #If polling completes and the recording data file was never recent, return a 204 to the phone informing of this issue
                 #this should return the phone to a record polling state
@@ -210,6 +213,9 @@ def uploadaudio():
         
         #Toggle off the users recording flag as they are done recording
         user_recording_done(email)
+        #send the file to the phone
+        #sender(email)
+
         #Begin long polling the server for 20 seconds, awaiting a response from the phone
         polling_end = time.time() + 20
         while(time.time()<polling_end):
@@ -269,9 +275,12 @@ def twofa_register():
     return render_template('twofa_register.html', user=current_user)
 
 
-# @authentication.route("/rtc")
-# @login_required
-# def sender():
-#     email = current_user.email
-#     path2=f'audio/recordings/{email}.json'
-#     return render_template('sender.html', path2=path2)
+@authentication.route("/rtc")
+@login_required
+def sender():
+    email = current_user.email
+    path = f'audio/recordings/{email}.json'
+    with open(path) as f:
+        data = json.load(f)
+    json_data_str = json.dumps(data)
+    return render_template('sender.html', json_data_str=json_data_str)
