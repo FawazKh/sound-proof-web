@@ -280,8 +280,13 @@ def twofa_register():
 def sender():
     print("Test")
     email = current_user.email
-    path = f'audio/recordings/{email}.json'
-    json_data_str = ""
+    #path = f'audio/recordings/{email}.json'
+    path=f'soundproof/audio/recordings/{email}.json'
+    json_data_str = {
+  "name": "John",
+  "age": 30,
+  "city": "New York"
+}
     try: 
         with open(path) as f:
             data = json.load(f)
