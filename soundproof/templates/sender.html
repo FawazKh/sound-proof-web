@@ -20,7 +20,7 @@
       console.log('Connected to PeerJS server with ID:', id);
       const conn = myPeer.connect('mobile-peer-id');
 
-      // When the data connection is open, send the JSON data to the receiver.
+      // When the data connection is open, send the JSON data to the receiver
       conn.on('open', () => {
         
         console.log('Data connection with receiver opened.');
