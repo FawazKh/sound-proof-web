@@ -282,11 +282,7 @@ def sender():
     email = current_user.email
     #path = f'audio/recordings/{email}.json'
     path=f'soundproof/audio/recordings/{email}.json'
-    json_data_str = {
-  "name": "John",
-  "age": 30,
-  "city": "New York"
-}
+    json_data_str = ""
     try: 
         with open(path) as f:
             data = json.load(f)
