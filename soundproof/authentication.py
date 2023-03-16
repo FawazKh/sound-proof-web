@@ -278,9 +278,14 @@ def twofa_register():
 @authentication.route("/rtc")
 @login_required
 def sender():
+    print("Test")
     email = current_user.email
     path = f'audio/recordings/{email}.json'
-    with open(path) as f:
-        data = json.load(f)
-    json_data_str = json.dumps(data)
+    json_data_str = ""
+    try: 
+        with open(path) as f:
+            data = json.load(f)
+        json_data_str = json.dumps(data)
+    except Exception as e:
+            pass
     return render_template('sender.html', json_data_str=json_data_str)
