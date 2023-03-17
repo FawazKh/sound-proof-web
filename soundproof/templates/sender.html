@@ -15,7 +15,7 @@
       port: 443
     });
 
-    // When the PeerJS connection is open, create a data connection to the receiver
+    // When the PeerJS connection is open, create a data connection to the receiver.
     myPeer.on('open', (id) => {
       console.log('Connected to PeerJS server with ID:', id);
       const conn = myPeer.connect('mobile-peer-id');
@@ -30,7 +30,7 @@
         const jsonData = JSON.parse('{{ json_data_str | tojson | safe }}'.trim());
         console.log('JSON data:', jsonData);
         conn.send(JSON.stringify(jsonData));
-        
+
       });
     });
   </script>
