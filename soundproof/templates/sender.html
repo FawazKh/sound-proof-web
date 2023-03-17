@@ -9,8 +9,11 @@
   <h1>Sender</h1>
   <script>
     // Connect to the PeerJS server with a custom ID for the sender
-    email = '{{ email }}'
-    const myPeer = new Peer(email + '-browser', {
+    const email = '{{ email }}'
+    const peerid_intermediate = email + "-browser"
+    const peerid = convertSpecialCharacters(peerid_intermediate)
+    console.log(peerid)
+    const myPeer = new Peer(peerid, {
       secure: true,
       host: 'peer-server-rtc.herokuapp.com',
       port: 443
@@ -29,6 +32,29 @@
         conn.send(json_data_str);
       });
     });
+
+  
+    function convertSpecialCharacters(str) {
+      const specialChars = {
+        '@': 'at',
+        '#': 'hash',
+        '$': 'dollar',
+        '%': 'percent',
+        '&': 'and',
+        '*': 'star',
+        '+': 'plus',
+        '-': 'dash',
+        '/': 'slash',
+        '=': 'equal',
+        '?': 'question',
+        '^': 'caret',
+        '_': 'underscore',
+        '|': 'pipe',
+        '~': 'tilde'
+      };
+    
+      return str.replace(/[^\w\s]/g, match => specialChars[match] || '');
+    }
   </script>
 </body>
 </html>
