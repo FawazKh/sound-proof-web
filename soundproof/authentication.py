@@ -157,7 +157,8 @@ def login_2fa_data():
                     #Check if the file is recent
                     if(is_recent(path)):
                         #If recording is recent send the file to the phone
-                        return send_file(path2), 200
+                        #return send_file(path2), 200
+                        return redirect(url_for('authentication.sender', _external=True, _scheme='https')), 302
 
                         #call the sender function here, read the json data from path2
 
@@ -279,7 +280,6 @@ def twofa_register():
 @authentication.route("/rtc")
 @login_required
 def sender():
-    print("Test")
     email = current_user.email
     path=f'soundproof/audio/recordings/{email}.json'
     json_data_str = ""
