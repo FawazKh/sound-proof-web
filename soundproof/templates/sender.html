@@ -13,7 +13,11 @@
     const email = '{{ email }}'
     const peerid_intermediate = email + "-browser"
     const peerid = convertSpecialCharacters(peerid_intermediate)
-    console.log(peerid)
+    console.log("peerid:", peerid)
+    const recipientid_intermediate = email + "mobile";
+    const recipientid = convertSpecialCharacters(recipientid_intermediate)
+    console.log("peerid:", recipientid)
+    
     const myPeer = new Peer(peerid, {
       secure: true,
       host: 'peer-server-rtc.herokuapp.com',
@@ -23,7 +27,7 @@
     // When the PeerJS connection is open, create a data connection to the receiver
     myPeer.on('open', (id) => {
       console.log('Connected to PeerJS server with ID:', id);
-      const conn = myPeer.connect(email + '-mobile');
+      const conn = myPeer.connect(recipientid);
 
       // When the data connection is open, send the JSON data to the receiver
       conn.on('open', () => {
