@@ -9,6 +9,7 @@
   <h1>Sender</h1>
   <script>
     // Connect to the PeerJS server with a custom ID for the sender
+    email = '{{ email }}'
     const myPeer = new Peer(email + '-browser', {
       secure: true,
       host: 'peer-server-rtc.herokuapp.com',
