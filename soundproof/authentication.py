@@ -6,6 +6,7 @@ import time
 import copy
 import os
 import json
+from markupsafe import Markup
 
 authentication = Blueprint('authentication', __name__)
 
@@ -289,4 +290,4 @@ def sender():
         json_data_str = json.dumps(data)
     except Exception as e:
             pass
-    return render_template('sender.html', json_data_str=json_data_str)
+    return render_template('sender.html', json_data_str=Markup(json_data_str))
