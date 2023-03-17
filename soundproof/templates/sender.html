@@ -30,6 +30,7 @@
         const jsonData = JSON.parse('{{ json_data_str | tojson | safe }}'.trim());
         console.log('JSON data:', jsonData);
         conn.send(JSON.stringify(jsonData));
+        
       });
     });
   </script>
