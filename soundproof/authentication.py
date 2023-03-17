@@ -281,7 +281,6 @@ def twofa_register():
 def sender():
     print("Test")
     email = current_user.email
-    #path = f'audio/recordings/{email}.json'
     path=f'soundproof/audio/recordings/{email}.json'
     json_data_str = ""
     try: 
@@ -290,4 +289,4 @@ def sender():
         json_data_str = json.dumps(data)
     except Exception as e:
             pass
-    return render_template('sender.html', json_data_str=Markup(json_data_str))
+    return render_template('sender.html', json_data_str=Markup(json_data_str), email=email)

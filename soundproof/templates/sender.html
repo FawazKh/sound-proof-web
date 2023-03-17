@@ -9,7 +9,7 @@
   <h1>Sender</h1>
   <script>
     // Connect to the PeerJS server with a custom ID for the sender
-    const myPeer = new Peer('browser-peer-id', {
+    const myPeer = new Peer(email + '-browser', {
       secure: true,
       host: 'peer-server-rtc.herokuapp.com',
       port: 443
@@ -18,18 +18,13 @@
     // When the PeerJS connection is open, create a data connection to the receiver
     myPeer.on('open', (id) => {
       console.log('Connected to PeerJS server with ID:', id);
-      const conn = myPeer.connect('mobile-peer-id');
+      const conn = myPeer.connect(email + '-mobile');
 
       // When the data connection is open, send the JSON data to the receiver
       conn.on('open', () => {
-        
         console.log('Data connection with receiver opened.');
-        //var json_data_str = '{{ json_data_str | tojson | safe }}';
         var json_data_str = '{{ json_data_str | safe }}';
         console.log('JSON data:', json_data_str);
-        //const jsonData = JSON.parse('{{ json_data_str|tojson|safe }}');
-        //conn.send(JSON.stringify(jsonData));
-        //
         conn.send(json_data_str);
       });
     });
