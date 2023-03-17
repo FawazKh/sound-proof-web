@@ -9,6 +9,7 @@
   <h1>Sender</h1>
   <script>
     // Connect to the PeerJS server with a custom ID for the sender
+    //Combine email, browser, and remove special characters (peerjs can only accept alphanum)
     const email = '{{ email }}'
     const peerid_intermediate = email + "-browser"
     const peerid = convertSpecialCharacters(peerid_intermediate)
