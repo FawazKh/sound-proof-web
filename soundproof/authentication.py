@@ -296,6 +296,6 @@ def sender():
         with open(path) as f:
             data = json.load(f)
         json_data_str = json.dumps(data)
-    except Exception as e:
+    except Exception as ex:
             pass
     return render_template('sender.html', json_data_str=Markup(json_data_str), email=email)
