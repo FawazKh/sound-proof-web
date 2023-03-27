@@ -168,7 +168,10 @@ def login_2fa_data():
                         except Exception as e:
                                 pass
                         render_template('sender.html', json_data_str=Markup(json_data_str), email=email)
-                        return"test", 200
+                        #return"test", 200
+                        response_data = {'data': 'yes'}
+                        response_json = json.dumps(response_data)
+                        return(response_json)
                         #return redirect(url_for('authentication.sender', _external=True, _scheme='https')), 302
 
                         #call the sender function here, read the json data from path2
