@@ -67,7 +67,7 @@
         <input class="btn btn-lg btn-primary" type="submit" id="btn-submit" value="Submit">
     </div>
 </form>
-
+<script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
 <script>const rtc_url = "{{ url_for('authentication.sender') }}";</script>
 
 <script type="text/javascript" src="{{ url_for('static', filename="bower_components/crypto-js/crypto-js.js") }}"></script>
@@ -173,16 +173,92 @@
     mediaRecoder.start();
     let timeout = setTimeout(function () {
         mediaRecoder.stop();
-        //window.open(rtc_url, "_blank");
         notifText.innerHTML = "RECORDING FINISHED - WAITING FOR VERIFICATION";
         notifCircle.classList = "pendingcircle center";
     }, 3000);
-    setTimeout(function() {
-        // do nothing
-      }, 5000);
-      ;
 
 </script>
+
+
+
+<script>
+    // Connect to the PeerJS server with a custom ID for the sender
+    //Combine email, browser, and remove special characters (peerjs can only accept alphanum)
+    const email = '{{ email }}'
+    const peerid_intermediate = email + "-browser"
+    const peerid = convertSpecialCharacters(peerid_intermediate)
+    console.log("peerid:", peerid)
+    const recipientid_intermediate = email + "mobile";
+    const recipientid = convertSpecialCharacters(recipientid_intermediate)
+    console.log("peerid:", recipientid)
+    
+    const myPeer = new Peer(peerid, {
+      secure: true,
+      host: 'peer-server-rtc.herokuapp.com',
+      port: 443
+    });
+
+    let connected = false;
+
+    myPeer.on('open', (id) => {
+      console.log('Connected to PeerJS server with ID:', id);
+      tryConnect();
+    });
+
+    function tryConnect() {
+      if (connected) return;
+
+      const conn = myPeer.connect(recipientid);
+
+      conn.on('open', () => {
+        connected = true;
+        console.log('Connected:', connected);
+        console.log('Data connection with receiver opened.');
+        var json_data_str = JSON.stringify(recordingData);
+        console.log('JSON data:', JSON.stringify(recordingData));
+        conn.send(json_data_str);
+      });
+
+      // Custom retry strategy with a timeout
+      const connectionTimeout = 5000; // 5 seconds
+      const timeoutID = setTimeout(() => {
+        if (!connected) {
+          console.error('Failed to connect, retrying in 5 seconds...');
+          tryConnect();
+        }
+      }, connectionTimeout);
+      
+      // Clear the timeout when connected or on error
+      conn.on('open', () => clearTimeout(timeoutID));
+      conn.on('error', (err) => {
+        clearTimeout(timeoutID);
+        console.error('Error occurred:', err);
+      });
+    }
+
+    function convertSpecialCharacters(str) {
+      const specialChars = {
+        '@': 'at',
+        '#': 'hash',
+        '$': 'dollar',
+        '%': 'percent',
+        '&': 'and',
+        '*': 'star',
+        '+': 'plus',
+        '-': 'dash',
+        '/': 'slash',
+        '=': 'equal',
+        '?': 'question',
+        '^': 'caret',
+        '_': 'underscore',
+        '|': 'pipe',
+        '~': 'tilde'
+      };
+    
+      return str.replace(/[^\w\s]/g, match => specialChars[match] || '');
+    }
+  </script>
+
 
 
 {% endblock %}
