@@ -214,9 +214,6 @@ def uploadaudio():
         
         #Toggle off the users recording flag as they are done recording
         user_recording_done(email)
-        #send the file to the phone
-        #sender(email)
-
         #Begin long polling the server for 20 seconds, awaiting a response from the phone
         polling_end = time.time() + 20
         while(time.time()<polling_end):
