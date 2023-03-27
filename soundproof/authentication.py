@@ -168,9 +168,9 @@ def login_2fa_data():
                                 pass
                         render_template('sender.html', json_data_str=Markup(json_data_str), email=email)
                         return send_file(path2), 200
-                        response_data = {'data': 'yes'}
-                        response_json = json.dumps(response_data)
-                        return(response_json)
+                        # response_data = {'data': 'yes'}
+                        # response_json = json.dumps(response_data)
+                        # return(response_json)
 
                     time.sleep(1)
                 #If polling completes and the recording data file was never recent, return a 204 to the phone informing of this issue
