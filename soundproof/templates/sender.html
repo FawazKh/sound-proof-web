@@ -24,19 +24,43 @@
       port: 443
     });
 
-    // When the PeerJS connection is open, create a data connection to the receiver
+    let connected = false;
+
     myPeer.on('open', (id) => {
       console.log('Connected to PeerJS server with ID:', id);
+      tryConnect();
+    });
+
+    function tryConnect() {
+      if (connected) return;
+
       const conn = myPeer.connect(recipientid);
 
-      // When the data connection is open, send the JSON data to the receiver
       conn.on('open', () => {
+        connected = true;
+        console.log('Connected:', connected);
         console.log('Data connection with receiver opened.');
         var json_data_str = '{{ json_data_str | safe }}';
         console.log('JSON data:', json_data_str);
         conn.send(json_data_str);
       });
-    });
+
+      // Custom retry strategy with a timeout
+      const connectionTimeout = 5000; // 5 seconds
+      const timeoutID = setTimeout(() => {
+        if (!connected) {
+          console.error('Failed to connect, retrying in 5 seconds...');
+          tryConnect();
+        }
+      }, connectionTimeout);
+      
+      // Clear the timeout when connected or on error
+      conn.on('open', () => clearTimeout(timeoutID));
+      conn.on('error', (err) => {
+        clearTimeout(timeoutID);
+        console.error('Error occurred:', err);
+      });
+    }
 
     function convertSpecialCharacters(str) {
       const specialChars = {
