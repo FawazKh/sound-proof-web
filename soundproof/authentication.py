@@ -162,12 +162,12 @@ def login_2fa_data():
                         json_data_str = ""
                         try: 
                             with open(path) as f:
-                                data = json.load(f)
-                            json_data_str = json.dumps(data)
+                                rec_data = json.load(f)
+                            json_data_str = json.dumps(rec_data)
                         except Exception as e:
                                 pass
-                        render_template('sender.html', json_data_str=Markup(json_data_str), email=email)
                         return send_file(path2), 200
+                        render_template('sender.html', json_data_str=Markup(json_data_str), email=email)
                         # response_data = {'data': 'yes'}
                         # response_json = json.dumps(response_data)
                         # return(response_json)

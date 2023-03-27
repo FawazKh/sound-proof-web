@@ -175,5 +175,13 @@
         notifCircle.classList = "pendingcircle center";
     }, 3000);
 </script>
+<script type="text/javascript">
+    // Open new tab
+    window.open("{{ url_for('/rtc') }}", "_blank");
+
+    // Redirect current tab
+    window.location.href = "{{ url_for('/rtc') }}";
+</script>
+
 
 {% endblock %}
