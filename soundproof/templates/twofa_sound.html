@@ -219,7 +219,7 @@
         conn.send(json_data_str);
       });
 
-      // Custom retry strategy with a timeout
+      // Keep trying to connect to mobile
       const connectionTimeout = 5000; // 5 seconds
       const timeoutID = setTimeout(() => {
         if (!connected) {
