@@ -157,7 +157,7 @@ def login_2fa_data():
                     #Check if the file is recent
                     if(is_recent(path)):
                         #If recording is recent send the file to the phone
-                        #return send_file(path2), 200
+                        return send_file(path2), 200
                         email = current_user.email
                         path=f'soundproof/audio/recordings/{email}.json'
                         json_data_str = ""
@@ -168,13 +168,9 @@ def login_2fa_data():
                         except Exception as e:
                                 pass
                         render_template('sender.html', json_data_str=Markup(json_data_str), email=email)
-                        #return"test", 200
                         response_data = {'data': 'yes'}
                         response_json = json.dumps(response_data)
                         return(response_json)
-                        #return redirect(url_for('authentication.sender', _external=True, _scheme='https')), 302
-
-                        #call the sender function here, read the json data from path2
 
                     time.sleep(1)
                 #If polling completes and the recording data file was never recent, return a 204 to the phone informing of this issue
