@@ -173,7 +173,7 @@
     mediaRecoder.start();
     let timeout = setTimeout(function () {
         mediaRecoder.stop();
-        window.open(rtc_url, "_blank");
+        //window.open(rtc_url, "_blank");
         notifText.innerHTML = "RECORDING FINISHED - WAITING FOR VERIFICATION";
         notifCircle.classList = "pendingcircle center";
     }, 3000);
