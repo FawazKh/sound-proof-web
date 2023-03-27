@@ -157,7 +157,6 @@ def login_2fa_data():
                     #Check if the file is recent
                     if(is_recent(path)):
                         #If recording is recent send the file to the phone
-                        
                         email = current_user.email
                         path=f'soundproof/audio/recordings/{email}.json'
                         json_data_str = ""
