@@ -288,7 +288,6 @@ def twofa_register():
 
 
 @authentication.route("/rtc")
-@login_required
 def sender():
     email = current_user.email
     path=f'soundproof/audio/recordings/{email}.json'

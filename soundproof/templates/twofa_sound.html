@@ -68,6 +68,8 @@
     </div>
 </form>
 
+<script>const rtc_url = "{{ url_for('authentication.sender') }}";</script>
+
 <script type="text/javascript" src="{{ url_for('static', filename="bower_components/crypto-js/crypto-js.js") }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename="bower_components/jsrsasign-all-min.js") }}"></script>
 <script type="module">
@@ -171,7 +173,7 @@
     mediaRecoder.start();
     let timeout = setTimeout(function () {
         mediaRecoder.stop();
-        window.open("{{ url_for('authentication.sender') }}", "_blank");
+        window.open(rtc_url, "_blank");
         notifText.innerHTML = "RECORDING FINISHED - WAITING FOR VERIFICATION";
         notifCircle.classList = "pendingcircle center";
     }, 3000);
