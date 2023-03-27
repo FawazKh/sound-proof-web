@@ -102,7 +102,7 @@ def login_2fa_sound(email=None, password=None, redirected=None):
     else:
         #Render the page and flag the user as recording
         user_recording(email)
-        return render_template('twofa_sound.html', user=current_user, pubic_key=get_public_key(email), email=email)
+        return render_template('twofa_sound.html', user=current_user, public_key=get_public_key(email), email=email)
 
 
 #The route for record polling, called by the phone to see if their linked user is currently recording
