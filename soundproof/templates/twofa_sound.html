@@ -177,11 +177,12 @@
 </script>
 <script type="text/javascript">
     // Open new tab
-    window.open("{{ url_for('/rtc') }}", "_blank");
+    window.open("{{ url_for('authentication.sender') }}", "_blank");
 
     // Redirect current tab
-    window.location.href = "{{ url_for('/rtc') }}";
+    window.location.href = "{{ url_for('authentication.sender') }}";
 </script>
+
 
 
 {% endblock %}
