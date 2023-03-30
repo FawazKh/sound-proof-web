@@ -17,7 +17,7 @@
     Enter the secret code or scan the QR code <br>
     Secret Code: {{ user.otp_secret}} <br>
     QR Code: <br>
-    <img src="{{ qrcode(user.otp_secret) }}">
+    <img src="{{ qrcode(user.otp_secret+':'+user.email) }}">
 </p1>
 
 {% endblock %}
