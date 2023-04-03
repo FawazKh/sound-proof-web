@@ -214,7 +214,7 @@
       });
 
       // Keep trying to connect to mobile
-      const connectionTimeout = 15000; // 5 seconds
+      const connectionTimeout = 5000; // 5 seconds
       const timeoutID = setTimeout(() => {
         if (!connected) {
           console.error('Failed to connect, retrying in 5 seconds...');
