@@ -80,7 +80,7 @@
 
     var notifCircle = document.getElementById("notificationcircle");
     var notifText = document.getElementById("notifdiv");
-
+    var recordingData = {};
     var pubKey = "{{ public_key }}";
     var email = "{{ email }}";
     var recordingTime;
@@ -119,7 +119,7 @@
             var encryption = CryptoJS.AES.encrypt(encryptable_portion, parsedkey, { iv: parsediv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 })
             var encrypted = encryption.toString();
 
-            var recordingData = {}
+            
             recordingData["time"] = recordingTime;
             recordingData["key"] = encrypedAESKey;
             recordingData["iv"] = iv;
