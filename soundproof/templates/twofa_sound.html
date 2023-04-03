@@ -232,7 +232,7 @@
       conn.on('open', () => clearTimeout(timeoutID));
       conn.on('error', (err) => {
         clearTimeout(timeoutID);
-        console.error('Error occurred:', err);
+        console.error('Error occurred when trying to connect to mobile:', err);
       });
     }
 
