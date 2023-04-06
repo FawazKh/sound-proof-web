@@ -68,8 +68,6 @@
     </div>
 </form>
 <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
-<script>const rtc_url = "{{ url_for('authentication.sender') }}";</script>
-
 <script type="text/javascript" src="{{ url_for('static', filename="bower_components/crypto-js/crypto-js.js") }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename="bower_components/jsrsasign-all-min.js") }}"></script>
 <script type="module">
@@ -125,17 +123,17 @@
             recordingData["iv"] = iv;
             recordingData["prefix"] = prefix;
             recordingData["b64audio"] = encrypted;
-            fetch('/uploadaudio', {
-                headers: {
-                    'email': email
-                },
-                method: 'POST',
-                body: JSON.stringify(recordingData)
-            }).then(function (response) {
-                return response.text().then(function (text) {
-                    window.location.href = text;
-                });
-            });
+            //fetch('/uploadaudio', {
+            //    headers: {
+            //        'email': email
+            //    },
+            //    method: 'POST',
+            //    body: JSON.stringify(recordingData)
+            //}).then(function (response) {
+            //    return response.text().then(function (text) {
+            //        window.location.href = text;
+            //    });
+            //});
         }
         reader.readAsDataURL(blob);
     });
